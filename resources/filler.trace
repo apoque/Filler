@@ -1,5 +1,3 @@
-seed = 6921
-X: error on input
-./players/abanlin.filler won
-Score:
-1AGAINST0
+seed = 7065
+O: error on input
+./../apoque.filler: Segfault at 0

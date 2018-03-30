@@ -24,8 +24,19 @@ typedef struct		s_coor
 typedef struct		s_filler
 {
 	char			**tab;
+	int				**nb;
 	t_coor			size;
 	short			player;
+	t_coor			piece_size;
+	char			**piece;
+	short			piece_width;
+	short			piece_height;
+	short			ok;
+	t_coor			output;
 }					t_filler;
+
+void				ft_treat_piece(t_filler *fil);
+void				ft_free_struct(t_filler *fil);
+void				ft_algo(t_filler *fil);
 
 #endif

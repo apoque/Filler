@@ -18,7 +18,9 @@ NAME = apoque.filler
 
 INC = filler.h
 
-SRC =main.c\
+SRC =	main.c\
+		filler.c\
+		algo.c\
 
 OBJ = $(SRC:.c=.o)
 
