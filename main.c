@@ -139,7 +139,6 @@ int		main(void)
 				fil.player = 2;
 		}
 	}
-
 	while (fil.ok == 1)
 	{
 		ft_get_plate_size(&fil, line);
@@ -147,8 +146,10 @@ int		main(void)
 		ft_get_plate(&fil);
 		ft_get_piece(&fil);
 		ft_algo(&fil);
+		printf("%i %i\n", fil.output.y, fil.output.x);
+		exit(1);
 		//printf("game x = %i y = %i\npiece x = %i y = %i\nouput x = %i y = %i\n", fil.size.x, fil.size.y, fil.piece_size.x, fil.piece_size.y, fil.output.x, fil.output.y);
-		ft_free_struct(&fil);
+		//ft_free_struct(&fil);
 	}
 	return (0);
 }
