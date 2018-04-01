@@ -25,10 +25,16 @@ typedef struct		s_filler
 {
 	char			**tab;
 	int				**nb;
+	t_coor			*targets;
+	t_coor			*spots;
+	int				nb_targets;
+	int				nb_spots;
 	t_coor			size;
 	short			player;
+	short			enemi;
 	t_coor			piece_size;
 	char			**piece;
+	t_coor			*piece_coor;
 	short			piece_width;
 	short			piece_height;
 	short			ok;
@@ -38,5 +44,10 @@ typedef struct		s_filler
 void				ft_treat_piece(t_filler *fil);
 void				ft_free_struct(t_filler *fil);
 void				ft_algo(t_filler *fil);
+void				ft_spot_clear(t_filler *fil, int i, int j);
+int					ft_get_dist(t_filler *fil, int k, int i);
+void				ft_get_piece_coor(t_filler *fil);
+void				ft_place_piece(t_filler *fil);
+int					ft_power(int nb, int power);
 
 #endif

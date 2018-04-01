@@ -31,6 +31,10 @@ void		ft_free_struct(t_filler *fil)
 	free(fil->piece);
 	free(fil->tab);
 	free(fil->nb);
+	i = -1;
+	free(fil->spots);
+	free(fil->targets);
+	free(fil->piece_coor);
 }
 
 void		ft_treat_piece2(t_filler *fil)
@@ -41,6 +45,7 @@ void		ft_treat_piece2(t_filler *fil)
 
 	j = -1;
 	k = 0;
+
 	while (++j < X)
 	{
 		i = -1;

@@ -85,6 +85,7 @@ SRC =	ft_memset.c \
 		ft_strjoinfree.c\
 		ft_strndupfree.c\
 		get_next_line.c\
+		ft_power.c\
 
 OBJ = $(SRC:.c=.o)
 

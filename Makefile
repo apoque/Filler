@@ -21,6 +21,8 @@ INC = filler.h
 SRC =	main.c\
 		filler.c\
 		algo.c\
+		algo2.c\
+		algo3.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -36,7 +38,7 @@ clean :
 
 fclean : clean
 	cd libft ; make fclean ; cd ..
-	rm -rf libftprintf.a
+	rm -rf $(NAME)
 
 re : fclean all
 

@@ -18,13 +18,16 @@
 
 #define Y fil->size.y
 #define X fil->size.x
+#define I fil->piece_size.x
+#define J fil->piece_size.y
 
-void	ft_get_piece(t_filler *fil)
+int		ft_get_piece(t_filler *fil)
 {
 	char	*line;
 	int		i;
 
-	get_next_line(0, &line);
+	if (get_next_line(0, &line) <= 0)
+		return (0);
 	while (!(ft_isdigit(*line)))
 		line++;
 	fil->piece_size.y = ft_atoi(&(*line));
@@ -34,14 +37,24 @@ void	ft_get_piece(t_filler *fil)
 	fil->piece = (char **)malloc(sizeof(char *) * (fil->piece_size.y + 1));
 	while (i < fil->piece_size.y)
 	{
-		get_next_line(0, &(fil->piece[i]));
+		if (get_next_line(0, &(fil->piece[i])) <= 0)
+			return (0);
 		i++;
 	}
 	fil->piece[i] = NULL;
+	fil->piece_coor = (t_coor *)malloc(sizeof(t_coor) * I * J);
+	i = 0;
+	while (i <= I * J)
+	{
+		fil->piece_coor[i].x = -1;
+		fil->piece_coor[i].y = -1;
+		i++;
+	}
 	ft_treat_piece(fil);
+	return (1);
 }
 
-void	ft_init_plate(t_filler *fil)
+int		ft_init_plate(t_filler *fil)
 {
 	int	i;
 	int	j;
@@ -68,9 +81,10 @@ void	ft_init_plate(t_filler *fil)
 		}
 		i++;
 	}
+	return (1);
 }
 
-void	ft_get_plate(t_filler *fil)
+int		ft_get_plate(t_filler *fil)
 {
 	char	**tab;
 	int		i;
@@ -82,7 +96,8 @@ void	ft_get_plate(t_filler *fil)
 	tab = (char **)malloc(sizeof(char *) * (Y + 2));
 	while (i <= Y)
 	{
-		get_next_line(0, &tab[i]);
+		if (get_next_line(0, &tab[i]) <= 0)
+			return (0);
 		if (ft_isdigit(tab[i][0]))
 		{
 			j = 0;
@@ -101,15 +116,20 @@ void	ft_get_plate(t_filler *fil)
 	}
 	fil->tab[i] = NULL;
 	free(tab);
+	return (1);
 }
 
-void	ft_get_plate_size(t_filler *fil, char *line)
+int		ft_get_plate_size(t_filler *fil)
 {
 	int		i;
+	char	*line;
 
 	i = 0;
+	line = "";
 	fil->output.x = 0;
 	fil->output.y = 0;
+	if (get_next_line(0, &line) <= 0)
+		return (0);
 	while (!ft_isdigit(line[i]))
 		i++;
 	Y = ft_atoi(&line[i]);
@@ -117,7 +137,18 @@ void	ft_get_plate_size(t_filler *fil, char *line)
 		i++;
 	i++;
 	X = ft_atoi(&line[i]);
-	//free(line);
+	fil->targets = (t_coor *)malloc(sizeof(t_coor) * X * Y);
+	fil->spots = (t_coor *)malloc(sizeof(t_coor) * X * Y);
+	i = 0;
+	while (i < X * Y)
+	{
+		fil->targets[i].x = -1;
+		fil->targets[i].y = -1;
+		fil->spots[i].x = -1;
+		fil->spots[i].y = -1;
+		i++;
+	}
+	return (1);
 }
 
 int		main(void)
@@ -128,7 +159,7 @@ int		main(void)
 	ft_bzero(&fil, sizeof(fil));
 	fil.ok = 1;
 	line = "";
-	while (ft_strstr(line, "Plateau") == NULL)
+	/*while (ft_strstr(line, "Plateau") == NULL)
 	{
 		get_next_line(0, &line);
 		if (ft_strstr(line, "apoque") != NULL)
@@ -138,17 +169,17 @@ int		main(void)
 			else if (ft_strstr(line, "2") != NULL)
 				fil.player = 2;
 		}
-	}
-	while (fil.ok == 1)
+	}*/
+	get_next_line(0, &line);
+	fil.player = ((ft_strstr(line, "1") ? 1 : 2));
+	fil.enemi = ((fil.player == 1) ? 2 : 1);
+	while (1)
 	{
-		ft_get_plate_size(&fil, line);
-		ft_init_plate(&fil);
-		ft_get_plate(&fil);
-		ft_get_piece(&fil);
+		if (ft_get_plate_size(&fil) * ft_init_plate(&fil) * ft_get_plate(&fil) * ft_get_piece(&fil) == 1)
 		ft_algo(&fil);
+		else
+			return (-1);
 		printf("%i %i\n", fil.output.y, fil.output.x);
-		exit(1);
-		//printf("game x = %i y = %i\npiece x = %i y = %i\nouput x = %i y = %i\n", fil.size.x, fil.size.y, fil.piece_size.x, fil.piece_size.y, fil.output.x, fil.output.y);
 		//ft_free_struct(&fil);
 	}
 	return (0);
