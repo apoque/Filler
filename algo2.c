@@ -15,7 +15,8 @@
 #define Y fil->size.y
 #define I fil->piece_size.y
 #define J fil->piece_size.x
-
+#define A fil->spots[i].x + fil->piece_coor[j].x - fil->piece_coor[k].x
+#define B fil->spots[i].y + fil->piece_coor[j].y - fil->piece_coor[k].y
 #include <stdio.h>
 
 void			ft_get_piece_coor(t_filler *fil)
@@ -52,7 +53,7 @@ int				ft_check_place(t_filler *fil, int k, int i)
 	error = 0;
 	while (fil->piece_coor[j].x >= 0 && error == 0)
 	{
-		if ((fil->spots[i].x + fil->piece_coor[j].x - fil->piece_coor[k].x > X || fil->spots[i].y + fil->piece_coor[j].y - fil->piece_coor[k].y > Y || fil->nb[fil->spots[i].x + fil->piece_coor[j].x - fil->piece_coor[k].x != 0][fil->spots[i].y + fil->piece_coor[j].y - fil->piece_coor[k].y] != 0) && j != k)
+		if ((A > X || A < 0 || B > Y || B < 0 || fil->nb[B][A] != 0) && j != k)
 			error = 1;
 		j++;
 	}
@@ -69,12 +70,12 @@ void			ft_place_piece(t_filler *fil)
 	int	dist1;
 	int	dist2;
 
-	k = 0;
 	i = 0;
 	dist1 = -1;
 	dist2 = -1;
 	while (fil->spots[i].x >= 0)
 	{
+		k = 0;
 		while (fil->piece_coor[k].x >= 0)
 		{
 			//printf("yo %i\n", ft_check_place(fil, k, i));
@@ -92,6 +93,8 @@ void			ft_place_piece(t_filler *fil)
 		}
 		i++;
 	}
+	if (dist1 == -1)
+		ft_try_else(fil);;
 }
 
 void			ft_add_spot(t_filler *fil, int i, int j)

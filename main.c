@@ -21,13 +21,10 @@
 #define I fil->piece_size.x
 #define J fil->piece_size.y
 
-int		ft_get_piece(t_filler *fil)
+int		ft_get_piece(t_filler *fil, char *line)
 {
-	char	*line;
 	int		i;
 
-	if (get_next_line(0, &line) <= 0)
-		return (0);
 	while (!(ft_isdigit(*line)))
 		line++;
 	fil->piece_size.y = ft_atoi(&(*line));
@@ -119,17 +116,13 @@ int		ft_get_plate(t_filler *fil)
 	return (1);
 }
 
-int		ft_get_plate_size(t_filler *fil)
+int		ft_get_plate_size(t_filler *fil, char *line)
 {
 	int		i;
-	char	*line;
 
 	i = 0;
-	line = "";
 	fil->output.x = 0;
 	fil->output.y = 0;
-	if (get_next_line(0, &line) <= 0)
-		return (0);
 	while (!ft_isdigit(line[i]))
 		i++;
 	Y = ft_atoi(&line[i]);
@@ -148,6 +141,7 @@ int		ft_get_plate_size(t_filler *fil)
 		fil->spots[i].y = -1;
 		i++;
 	}
+	//printf("x = %i y = %i\n", X, Y);
 	return (1);
 }
 
@@ -171,15 +165,49 @@ int		main(void)
 		}
 	}*/
 	get_next_line(0, &line);
-	fil.player = ((ft_strstr(line, "1") ? 1 : 2));
-	fil.enemi = ((fil.player == 1) ? 2 : 1);
-	while (1)
+	if (ft_strstr(line, "apoque.filler") && ft_strstr(line, "1"))
+		fil.player = 1;
+	else if (ft_strstr(line, "apoque.filler") && ft_strstr(line, "2"))
+		fil.player = 2;
+	if (fil.player == 1)
+		fil.enemi = 2;
+	else if (fil.player == 2)
+		fil.enemi = 1;
+	/*while (1)
 	{
 		if (ft_get_plate_size(&fil) * ft_init_plate(&fil) * ft_get_plate(&fil) * ft_get_piece(&fil) == 1)
 		ft_algo(&fil);
 		else
 			return (-1);
 		printf("%i %i\n", fil.output.y, fil.output.x);
+		//ft_free_struct(&fil);
+	}*/
+	//printf("apoque = %i enemi = %i\n", fil.player, fil.enemi);
+	ft_strdel(&line);
+	while (fil.ok == 1)
+	{
+		//printf("line = |%s|\n", line);
+		//printf("A\n");
+		get_next_line(0, &line);
+		if (fil.ok == 0)
+			break;
+		if (!line)
+			continue;
+		if (!(ft_strstr(line, "Plateau") == NULL))
+		{
+			//printf("B\n");
+			ft_get_plate_size(&fil, line);
+			ft_init_plate(&fil);
+			ft_get_plate(&fil);
+		}
+		else if (!(ft_strstr(line, "Piece") == NULL))
+		{
+			//printf("C\n");
+			ft_get_piece(&fil, line);
+			ft_algo(&fil);
+			dprintf(1, "%i %i\n", fil.output.y, fil.output.x);
+		}
+		ft_strdel(&line);
 		//ft_free_struct(&fil);
 	}
 	return (0);

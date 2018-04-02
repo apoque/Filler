@@ -24,17 +24,21 @@ void		ft_free_struct(t_filler *fil)
 	while (i < fil->size.y)
 	{
 		//free(fil->piece[i]);
-		free(fil->tab[i]);
-		free(fil->nb[i]);
+		//free(fil->tab[i]);
+		//free(fil->nb[i]);
 		i++;
 	}
-	free(fil->piece);
-	free(fil->tab);
-	free(fil->nb);
+	//free(fil->piece);
+	//free(fil->tab);
+	//free(fil->nb);
 	i = -1;
-	free(fil->spots);
-	free(fil->targets);
-	free(fil->piece_coor);
+	//free(fil->spots);
+	//free(fil->targets);
+	//free(fil->piece_coor);
+	fil->output.x = 0;
+	fil->output.y = 0;
+	fil->nb_targets = 0;
+	fil->nb_spots = 0;
 }
 
 void		ft_treat_piece2(t_filler *fil)

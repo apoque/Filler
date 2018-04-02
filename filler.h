@@ -49,5 +49,6 @@ int					ft_get_dist(t_filler *fil, int k, int i);
 void				ft_get_piece_coor(t_filler *fil);
 void				ft_place_piece(t_filler *fil);
 int					ft_power(int nb, int power);
-
+int					ft_check_place(t_filler *fil, int k, int i);
+void				ft_try_else(t_filler *fil);
 #endif
