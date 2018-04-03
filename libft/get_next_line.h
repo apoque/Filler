@@ -6,7 +6,7 @@
 /*   By: apoque <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/22 12:24:41 by apoque            #+#    #+#             */
-/*   Updated: 2018/03/19 15:16:48 by apoque           ###   ########.fr       */
+/*   Updated: 2018/04/03 20:45:03 by apoque           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include "libft.h"
-# define BUFF_SIZE 2048
+# define BUFF_SIZE 1
 
 typedef struct			s_gnl
 {

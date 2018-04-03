@@ -6,7 +6,7 @@
 /*   By: apoque <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 16:13:17 by apoque            #+#    #+#             */
-/*   Updated: 2018/03/19 19:13:54 by apoque           ###   ########.fr       */
+/*   Updated: 2018/04/03 20:17:50 by apoque           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,43 @@
 
 #include <stdio.h>
 
-void		ft_free_struct(t_filler *fil)
+void		ft_free_struct(t_filler *fil, char** line)
 {
 	int	i;
 
 	i = 0;
+	if (fil->targets)
+		free(fil->targets);
+	if (fil->spots)
+		free(fil->spots);
 	while (i < fil->size.y)
 	{
-		//free(fil->piece[i]);
-		//free(fil->tab[i]);
-		//free(fil->nb[i]);
+		if (fil->tab[i])
+			free(fil->tab[i]);
+		if (fil->nb[i])
+			free(fil->nb[i]);
 		i++;
 	}
-	//free(fil->piece);
-	//free(fil->tab);
-	//free(fil->nb);
-	i = -1;
-	//free(fil->spots);
-	//free(fil->targets);
-	//free(fil->piece_coor);
-	fil->output.x = 0;
-	fil->output.y = 0;
-	fil->nb_targets = 0;
-	fil->nb_spots = 0;
+	if (fil->tab)
+		free(fil->tab);
+	if (fil->nb)
+		free(fil->nb);
+	//if (*line)
+	//	free(*line);
+	(void)line;
+	i = 0;
+	while (i < fil->piece_size.y)
+	{
+		if (fil->piece[i])
+			free(fil->piece[i]);
+		i++;
+	}
+	if (fil->piece)
+		free(fil->piece);
+	if (fil->piece_coor)
+	{
+		free(fil->piece_coor);
+	}
 }
 
 void		ft_treat_piece2(t_filler *fil)
@@ -47,21 +61,24 @@ void		ft_treat_piece2(t_filler *fil)
 	int	j;
 	int	k;
 
-	j = -1;
+	j = 0;
 	k = 0;
 
-	while (++j < X)
+	while (j < X)
 	{
-		i = -1;
-		while (++i < Y)
+		i = 0;
+		while (i < Y)
 		{
 			if (fil->piece[i][j] == '*' && fil->piece_width == -1)
 				fil->piece_width = j;
 			else if (fil->piece[i][j] == '*')
 				k = i;
+			i++;
 		}
+		j++;
 	}
 	fil->piece_width = k - fil->piece_width + 1;
+	//printf("piece x = %i y = %i\n", X, Y);
 }
 
 void		ft_treat_piece(t_filler *fil)

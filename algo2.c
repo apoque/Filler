@@ -6,7 +6,7 @@
 /*   By: apoque <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 16:13:17 by apoque            #+#    #+#             */
-/*   Updated: 2018/03/19 19:13:54 by apoque           ###   ########.fr       */
+/*   Updated: 2018/04/03 15:29:19 by apoque           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ void			ft_get_piece_coor(t_filler *fil)
 
 	i = 0;
 	k = 0;
+	/*printf("YOOOOOOOOOO\n");
+	while (i < I)
+	{
+		printf("%s\n", fil->piece[i]);
+		i++;
+	}
+	i = 0;*/
 	while (i < I)
 	{
 		j = 0;
@@ -42,6 +49,12 @@ void			ft_get_piece_coor(t_filler *fil)
 		}
 		i++;
 	}
+	/*i = 0;
+	while (fil->piece_coor[i].x > 0)
+	{
+		printf("piece n*%i: x = %i y = %i\n", i, fil->piece_coor[i].x, fil->piece_coor[i].y);
+		i++;
+	}*/
 }
 
 int				ft_check_place(t_filler *fil, int k, int i)
@@ -53,7 +66,7 @@ int				ft_check_place(t_filler *fil, int k, int i)
 	error = 0;
 	while (fil->piece_coor[j].x >= 0 && error == 0)
 	{
-		if ((A > X || A < 0 || B > Y || B < 0 || fil->nb[B][A] != 0) && j != k)
+		if ((A >= X || A < 0 || B >= Y || B < 0 || fil->nb[B][A] != 0) && j != k)
 			error = 1;
 		j++;
 	}
@@ -73,6 +86,12 @@ void			ft_place_piece(t_filler *fil)
 	i = 0;
 	dist1 = -1;
 	dist2 = -1;
+	/*while (fil->piece_coor[i].x >= 0)
+	{
+		printf("piece_coor n*%i: x = %i y = %i\n", i, fil->piece_coor[i].x, fil->piece_coor[i].y);
+		i++;
+	}
+	i = 0;*/
 	while (fil->spots[i].x >= 0)
 	{
 		k = 0;
@@ -93,8 +112,6 @@ void			ft_place_piece(t_filler *fil)
 		}
 		i++;
 	}
-	if (dist1 == -1)
-		ft_try_else(fil);;
 }
 
 void			ft_add_spot(t_filler *fil, int i, int j)
@@ -120,20 +137,20 @@ void			ft_add_spot(t_filler *fil, int i, int j)
 
 void			ft_spot_clear(t_filler *fil, int i, int j)
 {
-	if (i + 1 < Y && fil->nb[i + 1][j] == 0)
+	if (i + 1 < Y  && fil->nb[i + 1][j] == 0)
 		ft_add_spot(fil, i, j);
 	else if (i + 1 < Y && j + 1 < X && fil->nb[i + 1][j + 1] == 0)
 		ft_add_spot(fil, i, j);
-	else if (i + 1 < Y && j - 1 < X && fil->nb[i + 1][j - 1] == 0)
+	else if (i + 1 < Y && j - 1 < X && j - 1 >= 0 && fil->nb[i + 1][j - 1] == 0)
 		ft_add_spot(fil, i, j);
 	else if (i < Y && j + 1 < X && fil->nb[i][j + 1] == 0)
 		ft_add_spot(fil, i, j);
-	else if (i < Y && j - 1 < X && fil->nb[i][j - 1] == 0)
+	else if (i < Y && j - 1 < X && j - 1 >= 0 && fil->nb[i][j - 1] == 0)
 		ft_add_spot(fil, i, j);
-	else if (i - 1 < Y && j < X && fil->nb[i - 1][j] == 0)
+	else if (i - 1 < Y && i - 1 >= 0 && j < X && fil->nb[i - 1][j] == 0)
 		ft_add_spot(fil, i, j);
-	else if (i - 1 < Y && j + 1 < X && fil->nb[i - 1][j + 1] == 0)
+	else if (i - 1 < Y && i - 1 >= 0 && j + 1 < X && fil->nb[i - 1][j + 1] == 0)
 		ft_add_spot(fil, i, j);
-	else if (i - 1 < Y && j - 1 < X && fil->nb[i - 1][j - 1] == 0)
+	else if (i - 1 < Y && i - 1 >= 0 && j - 1 < X && j - 1 >= 0 && fil->nb[i - 1][j - 1] == 0)
 		ft_add_spot(fil, i, j);
-}
+	}

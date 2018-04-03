@@ -6,7 +6,7 @@
 /*   By: apoque <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 14:51:03 by apoque            #+#    #+#             */
-/*   Updated: 2018/03/19 16:29:14 by apoque           ###   ########.fr       */
+/*   Updated: 2018/04/03 16:38:01 by apoque           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct		s_filler
 }					t_filler;
 
 void				ft_treat_piece(t_filler *fil);
-void				ft_free_struct(t_filler *fil);
+void				ft_free_struct(t_filler *fil, char **line);
 void				ft_algo(t_filler *fil);
 void				ft_spot_clear(t_filler *fil, int i, int j);
 int					ft_get_dist(t_filler *fil, int k, int i);
