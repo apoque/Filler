@@ -23,6 +23,7 @@ SRC =	main.c\
 		algo.c\
 		algo2.c\
 		algo3.c\
+		ft_power.c\
 
 OBJ = $(SRC:.c=.o)
 

@@ -27,20 +27,24 @@ void			ft_get_piece_coor(t_filler *fil)
 
 	i = 0;
 	k = 0;
-	/*printf("YOOOOOOOOOO\n");
-	while (i < I)
+	dprintf(2, "YOOOOOOOOOO\nJ = %i\n", J);
+	/*while (i < I)
 	{
-		printf("%s\n", fil->piece[i]);
+		dprintf(2, "%s\n", fil->piece[i]);
 		i++;
 	}
 	i = 0;*/
+	dprintf(2, "__M__\n");
 	while (i < I)
 	{
+		dprintf(2, "__N__\n");
 		j = 0;
 		while (j < J)
 		{
+			dprintf(2, "__O__\n");
 			if (fil->piece[i][j] == '*')
 			{
+				dprintf(2, "__P__\n");
 				fil->piece_coor[k].x = j;
 				fil->piece_coor[k].y = i;
 				k++;
@@ -49,6 +53,7 @@ void			ft_get_piece_coor(t_filler *fil)
 		}
 		i++;
 	}
+	dprintf(2, "__Q__\n");
 	/*i = 0;
 	while (fil->piece_coor[i].x > 0)
 	{
@@ -97,7 +102,7 @@ void			ft_place_piece(t_filler *fil)
 		k = 0;
 		while (fil->piece_coor[k].x >= 0)
 		{
-			//printf("yo %i\n", ft_check_place(fil, k, i));
+			//printf("spot = %i piece coor = %i place =  %i\n", i, k, ft_check_place(fil, k, i));
 			if (ft_check_place(fil, k, i) == 0)
 			{
 				dist2 = ft_get_dist(fil, k, i);

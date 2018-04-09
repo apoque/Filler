@@ -16,43 +16,38 @@
 
 #include <stdio.h>
 
-void		ft_free_struct(t_filler *fil, char** line)
+void		ft_free_struct(t_filler fil)
 {
 	int	i;
 
 	i = 0;
-	if (fil->targets)
-		free(fil->targets);
-	if (fil->spots)
-		free(fil->spots);
-	while (i < fil->size.y)
+	if (fil.targets)
+		free(fil.targets);
+	if (fil.spots)
+		free(fil.spots);
+	while (i < fil.size.y)
 	{
-		if (fil->tab[i])
-			free(fil->tab[i]);
-		if (fil->nb[i])
-			free(fil->nb[i]);
+		if (fil.tab[i])
+			free(fil.tab[i]);
+		if (fil.nb[i])
+			free(fil.nb[i]);
 		i++;
 	}
-	if (fil->tab)
-		free(fil->tab);
-	if (fil->nb)
-		free(fil->nb);
-	//if (*line)
-	//	free(*line);
-	(void)line;
+	if (fil.tab)
+		free(fil.tab);
+	if (fil.nb)
+		free(fil.nb);
 	i = 0;
-	while (i < fil->piece_size.y)
+	while (i < fil.piece_size.y)
 	{
-		if (fil->piece[i])
-			free(fil->piece[i]);
+		if (fil.piece[i])
+			free(fil.piece[i]);
 		i++;
 	}
-	if (fil->piece)
-		free(fil->piece);
-	if (fil->piece_coor)
-	{
-		free(fil->piece_coor);
-	}
+	if (fil.piece)
+		free(fil.piece);
+	if (fil.piece_coor)
+		free(fil.piece_coor);
 }
 
 void		ft_treat_piece2(t_filler *fil)
@@ -89,17 +84,19 @@ void		ft_treat_piece(t_filler *fil)
 
 	fil->piece_height = -1;
 	fil->piece_width = -1;
-	i = -1;
-	while (++i < Y)
+	i = 0;
+	while (i < Y)
 	{
-		j = -1;
-		while (++j < X)
+		j = 0;
+		while (j < X)
 		{
 			if (fil->piece[i][j] == '*' && fil->piece_height == -1)
 				fil->piece_height = i;
 			else if (fil->piece[i][j] == '*')
 				k = i;
+			j++;
 		}
+		i++;
 	}
 	fil->piece_height = k - fil->piece_height + 1;
 	ft_treat_piece2(fil);

@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_power.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apoque <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/08 19:10:49 by apoque            #+#    #+#             */
-/*   Updated: 2017/11/08 19:10:56 by apoque           ###   ########.fr       */
+/*   Created: 2017/11/18 15:20:17 by apoque            #+#    #+#             */
+/*   Updated: 2017/11/18 15:20:44 by apoque           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <string.h>
-
-void	*ft_memset(void *s, int c, size_t n)
+int	ft_power(int nb, int power)
 {
-	unsigned char	*str;
-	int				i;
+	int	res;
 
-	i = 0;
-	str = (unsigned char*)s;
-	while (n-- > 0)
+	res = 1;
+	if (nb && power && power > 0)
 	{
-		str[i] = (unsigned char)c;
-		i++;
+		while (power > 0)
+		{
+			res = res * nb;
+			power--;
+		}
+		return (res);
 	}
-	return (s);
+	if (power == 0)
+		return (1);
+	else
+		return (0);
 }
