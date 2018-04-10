@@ -153,7 +153,5 @@ int		main(void)
 		}
 		free(line2);
 	}
-	while (1)
-	;
 return (0);
 }
