@@ -26,7 +26,7 @@ int		ft_get_piece(t_filler *fil, char *line)
 	int		i;
 
 	i = 0;
-	dprintf(2, "GET_PIECE\n\nline = |%s|\n\nPIECE\n\n", line);
+	//dprintf(2, "GET_PIECE\n\nline = |%s|\n\nPIECE\n\n", line);
 	while (!(ft_isdigit(line[i])))
 		i++;
 	fil->piece_size.y = ft_atoi(&(line[i]));
@@ -34,7 +34,7 @@ int		ft_get_piece(t_filler *fil, char *line)
 		i++;
 	fil->piece_size.x = ft_atoi(&(line[i]));
 	i = 0;
-	fil->piece = (char **)malloc(sizeof(char *) * (fil->piece_size.y + 1));
+	fil->piece = (char **)malloc(sizeof(char *) * (fil->piece_size.y));
 
 	//dprintf(2, "fil pieces : %p\n", fil->piece);
 	while (i < fil->piece_size.y)
@@ -43,19 +43,19 @@ int		ft_get_piece(t_filler *fil, char *line)
 		if (get_next_line(0, &(fil->piece[i])) < 0)
 			return (0);
 		//fil->piece[i][I] = '\0';
-		dprintf(2, "%s\n", fil->piece[i]);
+		//dprintf(2, "%s\n", fil->piece[i]);
 		//dprintf(2, "les fil pieces[i] : %p\n", fil->piece[i]);
 		i++;
 	}
-	fil->piece[fil->piece_size.y] = NULL;
+	//fil->piece[fil->piece_size.y] = NULL;
 
 
-	fil->piece_coor = (t_coor *)malloc(sizeof(t_coor) * I * J);
+	fil->piece_coor = (t_coor *)malloc(sizeof(t_coor) * I * J + 1);
 	//dprintf(2, "pieces coor : %p\n", fil->piece_coor);
 	i = 0;
 	while (i <= I * J)
 	{
-		dprintf(2, "%s\n", fil->piece[0]);
+		//dprintf(2, "%s\n", fil->piece[0]);
 		fil->piece_coor[i].x = -1;
 		fil->piece_coor[i].y = -1;
 		i++;
@@ -63,7 +63,7 @@ int		ft_get_piece(t_filler *fil, char *line)
 	//printf("\n<%s>\n", line);
 	//if (line)
 	//	free(line);
-	dprintf(2, "piece x = %i y = %i\n", fil->piece_size.x, fil->piece_size.y);
+	//dprintf(2, "piece x = %i y = %i\n", fil->piece_size.x, fil->piece_size.y);
 	i = 0;
 	/*dprintf(2, "LA PIECE\n");
 	while (i < J)
@@ -116,32 +116,40 @@ char	*ft_treat_tab(char *line)
 	char *tmp;
 
 	tmp = ft_strdup(line + 4);
-	free(line);
+	if (line)
+		free(line);
 	line = ft_strdup(tmp);
-	free(tmp);
+	if (tmp)
+		free(tmp);
 	return (line);
 }
 
 int		ft_get_plate(t_filler *fil)
 {
 	//char	**tab;
-	//char	*line;
+	char	*line;
 	int		i;
 	int		j;
 	int		k;
 
 	i = 0;
 	k = 0;
+	//flag = 0;
 	//tab = (char **)malloc(sizeof(char *) * (Y + 1));
 	//dprintf(2, "tab : %p\n", tab);
-	while (i <= Y)
+	get_next_line(0, &line);
+	free(line);
+	while (i < Y)
 	{
 		if (get_next_line(0, &fil->tab[k]) < 0)
 			return (0);
+		//if (flag == 0)
+		//	free(fil->tab[k]);
 		fil->tab[k] = ft_treat_tab(fil->tab[k]);
 		//dprintf(2, "line : %p\n", fil->tab[k]);
-		if (i > 0)
+		if (i >= 0)
 		{
+			//flag = 1;
 			j = 0;
 			//fil->tab[k] = ft_strdup(tab[i] + 4);
 			//fil->tab[k][X] = '\0';
@@ -198,11 +206,11 @@ int		ft_get_plate_size(t_filler *fil, char *line)
 	X = ft_atoi(&line[i]);
 	//if (fil->targets)
 	//	free(fil->targets);
-	fil->targets = (t_coor *)malloc(sizeof(t_coor) * X * Y - 1);
+	fil->targets = (t_coor *)malloc(sizeof(t_coor) * X * Y);
 	//dprintf(2, "fil targets : %p\n", fil->targets);
 	//if (fil->spots)
 	//	free(fil->spots);
-	fil->spots = (t_coor *)malloc(sizeof(t_coor) * X * Y - 1);
+	fil->spots = (t_coor *)malloc(sizeof(t_coor) * X * Y);
 	//dprintf(2, "fil spots : %p\n", fil->spots);
 	i = 0;
 	while (i < X * Y)
@@ -235,46 +243,45 @@ int		main(void)
 	//printf("%s\n", line2);
 	//dprintf(2, "apoque = %i enemi = %i\n", fil.player, fil.enemi);
 	if (line2)
-		//free(line2);
+		free(line2);
 	while (fil.ok == 1)
 	{
-		dprintf(2, "__1__\n");
+		//dprintf(2, "__1__\n");
 		flag = 0;
 		if (fil.ok == 0 || (get_next_line(0, &line2) <= 0))
 			break;
 		//printf("%s\nYO\n", line);
-		//if (!line)
 		//	continue;
-		dprintf(2, "__2__\n");
+		//dprintf(2, "__2__\n");
 		if (!(ft_strstr(line2, "Plateau") == NULL))
 		{
-			dprintf(2, "__3__\n");
+			//dprintf(2, "__3__\n");
 			ft_get_plate_size(&fil, line2);
-			dprintf(2, "__4__\n");
+			//dprintf(2, "__4__\n");
 			ft_init_plate(&fil);
-			dprintf(2, "__5__\n");
+			//dprintf(2, "__5__\n");
 			ft_get_plate(&fil);
-			dprintf(2, "__6__\n");
+			//dprintf(2, "__6__\n");
 		}
 		else if (!(ft_strstr(line2, "Piece") == NULL))
 		{
-			dprintf(2, "__7__\n");
+			//dprintf(2, "__7__\n");
 			ft_get_piece(&fil, line2);
-			dprintf(2, "__8__\n");
+			//dprintf(2, "__8__\n");
 			ft_algo(&fil);
-			dprintf(2, "__9__\n");
+			//dprintf(2, "__9__\n");
 			dprintf(1, "%i %i\n", fil.output.y, fil.output.x);
-			dprintf(2, "__10__\n");
+			//dprintf(2, "__10__\n");
 			flag = 1;
 		}
-		dprintf(2, "__11__\n");
-		//if (line)
-		//	free(line);
+		//dprintf(2, "__11__\n");
+		if (line2)
+			free(line2);
 		//if (flag == 1)
 		//	ft_free_struct(&fil);
 	}
-	//	while (1)
-	//		;
+	//while (1)
+	//	;
 	//if (fil.ok == 0)
 	//	ft_free_struct(&fil);
 	//while (1)
