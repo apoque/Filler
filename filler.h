@@ -14,7 +14,7 @@
 #define FILLER_H
 
 # include <stdlib.h>
-# include "libft3/libft.h"
+# include "libft/libft.h"
 typedef struct		s_coor
 {
 	int				x;
@@ -41,6 +41,7 @@ typedef struct		s_filler
 	t_coor			output;
 }					t_filler;
 
+char				*ft_treat_tab(char *line);
 void				ft_treat_piece(t_filler *fil);
 void				ft_free_struct(t_filler fil);
 void				ft_algo(t_filler *fil);

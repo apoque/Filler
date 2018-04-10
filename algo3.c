@@ -15,6 +15,8 @@
 #define Y fil->size.y
 #define I fil->piece_size.y
 #define J fil->piece_size.x
+#define A fil->targets[j].x - (fil->spots[i].x + fil->piece_coor[g].x - fil->piece_coor[k].x)
+#define B fil->targets[j].y - (fil->spots[i].y + fil->piece_coor[g].y - fil->piece_coor[k].y)
 
 void			ft_try_else(t_filler *fil)
 {
@@ -57,7 +59,7 @@ int				ft_get_dist(t_filler *fil, int k, int i)
 		g = 0;
 		while (fil->piece_coor[g].x >= 0)
 		{
-			dist2 = ft_power(fil->targets[j].x - (fil->spots[i].x + fil->piece_coor[g].x - fil->piece_coor[k].x) , 2) + ft_power(fil->targets[j].y - (fil->spots[i].y + fil->piece_coor[g].y - fil->piece_coor[k].y), 2);
+			dist2 = ft_power(A, 2) + ft_power(B, 2);
 			if (dist2 < dist1 || dist1 < 0)
 				dist1 = dist2;
 			g++;

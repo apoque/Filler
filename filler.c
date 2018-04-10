@@ -21,83 +21,35 @@ void		ft_free_struct(t_filler fil)
 	int	i;
 
 	i = 0;
-	if (fil.targets)
-		free(fil.targets);
-	if (fil.spots)
-		free(fil.spots);
+	free(fil.targets);
+	free(fil.spots);
 	while (i < fil.size.y)
 	{
-		if (fil.tab[i])
-			free(fil.tab[i]);
-		if (fil.nb[i])
-			free(fil.nb[i]);
+		free(fil.tab[i]);
+		free(fil.nb[i]);
 		i++;
 	}
-	if (fil.tab)
-		free(fil.tab);
-	if (fil.nb)
-		free(fil.nb);
+	free(fil.tab);
+	free(fil.nb);
 	i = 0;
 	while (i < fil.piece_size.y)
 	{
-		if (fil.piece[i])
-			free(fil.piece[i]);
+		free(fil.piece[i]);
 		i++;
 	}
-	if (fil.piece)
-		free(fil.piece);
-	if (fil.piece_coor)
-		free(fil.piece_coor);
+	free(fil.piece);
+	free(fil.piece_coor);
 }
 
-void		ft_treat_piece2(t_filler *fil)
+char	*ft_treat_tab(char *line)
 {
-	int	i;
-	int	j;
-	int	k;
+	char *tmp;
 
-	j = 0;
-	k = 0;
-
-	while (j < X)
-	{
-		i = 0;
-		while (i < Y)
-		{
-			if (fil->piece[i][j] == '*' && fil->piece_width == -1)
-				fil->piece_width = j;
-			else if (fil->piece[i][j] == '*')
-				k = i;
-			i++;
-		}
-		j++;
-	}
-	fil->piece_width = k - fil->piece_width + 1;
-	//printf("piece x = %i y = %i\n", X, Y);
-}
-
-void		ft_treat_piece(t_filler *fil)
-{
-	int	i;
-	int	j;
-	int	k;
-
-	fil->piece_height = -1;
-	fil->piece_width = -1;
-	i = 0;
-	while (i < Y)
-	{
-		j = 0;
-		while (j < X)
-		{
-			if (fil->piece[i][j] == '*' && fil->piece_height == -1)
-				fil->piece_height = i;
-			else if (fil->piece[i][j] == '*')
-				k = i;
-			j++;
-		}
-		i++;
-	}
-	fil->piece_height = k - fil->piece_height + 1;
-	ft_treat_piece2(fil);
+	tmp = ft_strdup(line + 4);
+	if (line)
+		free(line);
+	line = ft_strdup(tmp);
+	if (tmp)
+		free(tmp);
+	return (line);
 }
